@@ -15,8 +15,7 @@ def tipos_mov():
         ("B", "BAIXA"),
         ("T", "TRANSFERÊNCIA"),
         ("R", "PR. CONTÁBIL"),
-        ("P", "TRANS. PLANO")
-        ]
+        ("P", "TRANS. PLANO")]
 
     cur_dest.executemany(insert, valores)
     cnx.commit()
@@ -52,10 +51,14 @@ def tipos_bens():
 
     insert = cur_dest.prep("insert into pt_cadtip(codigo_tip, empresa_tip, descricao_tip) values (?, ?, ?)")
 
-    cur_orig.execute("""SELECT * FROM wpa.tbtipobem t """)
+    cur_orig.execute("""select * from wpa.tbcategoriabem t""")
 
-    for row in cur_orig:
-        cur_dest.execute(insert, (row[0], base.empresa, row[1].upper()))
+    for row in cur_orig.fetchall():
+        codigo_tip = row[0]
+        empresa_tip = base.empresa
+        descricao_tip = row[1].upper()
+
+        cur_dest.execute(insert, (codigo_tip, empresa_tip, descricao_tip[:60]))
     cnx.commit()
 
 def situacao():
@@ -76,7 +79,7 @@ def grupos():
     
     insert = cur_dest.prep("""insert into pt_cadpatg (codigo_gru,empresa_gru,nogru_gru) values (?,?,?)""")
 
-    cur_orig.execute("""select * from wpa.tbcategoriabem t """)
+    cur_orig.execute("""SELECT * FROM wpa.tbtipobem t """)
 
     for row in cur_orig:
         codigo_gru = row[0]
@@ -131,11 +134,13 @@ def unidades():
 
 def subunidades():
     print("Inserindo subunidades...")
+    cur_dest.execute("""delete from pt_cadpat""")
+    cur_dest.execute("""delete from pt_cadpats""")
 
     insert = cur_dest.prep("insert into pt_cadpats (empresa_set, codigo_set, codigo_des_set, noset_set, responsa_set, ocultar_set) values (?, ?, ?, ?, ?, ?)")
 
     cur_dest.execute("""SELECT
-                            a.codccusto,
+                            a.ccusto,
                             a.empresa,
                             a.unidade,
                             a.descr,

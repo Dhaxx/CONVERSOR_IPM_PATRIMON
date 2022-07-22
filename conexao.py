@@ -10,15 +10,15 @@ conexao_origem = pg.connect(
     password="Dnal250304"    
 )
 
-conexao_destino = fdb.connect(dsn="localhost:C:\Fiorilli\SCPI_8\Cidades\PIRACAIA-PM\ARQ2022\SCPI2022.FDB", user='FSCSCPI8', 
+conexao_destino = fdb.connect(dsn="localhost:D:\Fiorilli\SCPI_8\Cidades\PIRACAIA-PM\ARQ2022\SCPI2022.FDB", user='FSCSCPI8', 
                               password='scpi', port=3050, charset='UTF8')
 
-conexao_aux = fdb.connect(dsn="localhost:C:\Fiorilli\SCPI_8\Cidades\AUXILIAR\SCPI2022.FDB", user='FSCSCPI8', 
-                              password='scpi', port=3050, charset='UTF8')
+# conexao_aux = fdb.connect(dsn="localhost:D:\Fiorilli\SCPI_8\Cidades\AUXILIAR\SCPI2022.FDB", user='FSCSCPI8', 
+#                               password='scpi', port=3050, charset='UTF8')
 
 cur = conexao_origem.cursor(cursor_factory=psycopg2.extras.NamedTupleCursor)
 cur_d = conexao_destino.cursor()
-cur_a = conexao_aux.cursor()
+# cur_a = conexao_aux.cursor()
 
 def commit():
     conexao_destino.commit()

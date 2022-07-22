@@ -1,6 +1,7 @@
 import base
 import cadastros
 import manutencao
+import bens
 
 def main():
     # base.limpa_tabelas()
@@ -13,13 +14,14 @@ def main():
     # cadastros.tipos_mov()
     # cadastros.tipos_ajuste()
     # cadastros.tipos_baixas()
-    # cadastros.tipos_bens()
     # cadastros.situacao()
     # cadastros.tipos_bens()
     # cadastros.grupos()
     # cadastros.responsaveis()
     # cadastros.unidades()
     # cadastros.subunidades()
+
+    bens.cadastro()
 
     base.triggers("liga")
 
