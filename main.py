@@ -21,7 +21,9 @@ def main():
     # cadastros.unidades()
     # cadastros.subunidades()
 
-    bens.cadastro()
+    # bens.cadastro()
+    # bens.movimentacoes()
+    bens.atualiza_cad()
 
     base.triggers("liga")
 
