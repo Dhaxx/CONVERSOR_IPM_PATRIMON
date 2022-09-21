@@ -2,6 +2,7 @@ import conexao as cnx
 
 cur_orig = cnx.cur
 cur_dest = cnx.cur_d
+cur_aux = cnx.cur_a
 
 def cria_campo(nome_tabela, nome_campo):
     resultado = cur_dest.execute(   

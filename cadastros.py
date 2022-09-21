@@ -51,7 +51,12 @@ def tipos_bens():
 
     insert = cur_dest.prep("insert into pt_cadtip(codigo_tip, empresa_tip, descricao_tip) values (?, ?, ?)")
 
-    cur_orig.execute("""select * from wpa.tbcategoriabem t""")
+    cur_orig.execute("""select
+                            row_number () over (
+                            order by clacodigo),
+                            cladescricao 
+                        from
+                            wun.tbclasse t""")
 
     for row in cur_orig.fetchall():
         codigo_tip = row[0]
@@ -91,6 +96,7 @@ def grupos():
 
 def responsaveis():
     print("Convertendo responsáveis...")
+    cur_dest.execute("""delete from pt_cadresponsavel""")
     insert = cur_dest.prep("""insert into pt_cadresponsavel(codigo_resp, nome_resp, cpf_resp) values(?,?,?)""")
 
     cur_orig.execute("""SELECT distinct(unicodigo) FROM wpa.tbmovbem t """)
@@ -106,6 +112,8 @@ def responsaveis():
 
 def unidades():
     print("Inserindo unidades...")
+    cur_dest.execute("""DELETE FROM PT_CADPATS""")
+    cur_dest.execute("""DELETE FROM PT_CADPATD""")
 
     insert = cur_dest.prep("""INSERT INTO pt_cadpatd(empresa_des,
 	                                                codigo_des,
